@@ -1,0 +1,44 @@
+
+version: "3.3"
+
+services:
+ 
+
+  nodeapp:
+    build: ./app/
+    networks:
+      - back-proxy
+    expose:
+      - "3000"
+
+   
+    
+
+  proxy:
+    build: ./apache/
+    networks:
+     - back-proxy
+    ports:
+    - "8080:80"
+
+#  reverse-proxy:
+#    image: httpd:2.4
+#    ports:
+#      - "80:80"
+#    networks:
+#      - back-proxy 
+#    volumes:
+#      - ./httpd.conf:/usr/local/apache2/conf/httpd.conf
+#    command:
+#      - a2enmod proxy 
+#    depends_on:
+#      - nodeapp   
+
+
+networks:
+  back-proxy:    
+    driver: bridge
+
+ 
+
+
