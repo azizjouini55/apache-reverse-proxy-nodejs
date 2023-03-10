@@ -1,4 +1,4 @@
-FROM davask/d-apache:2.4-u16.04
+FROM debian:buster
 
 USER root
 LABEL dwl.server.proxy="proxy"
@@ -6,6 +6,7 @@ LABEL dwl.server.proxy="proxy"
 # http://stackoverflow.com/questions/7312215/is-there-a-way-to-remove-apaches-reverse-proxy-request-headers?answertab=votes#tab-top
 # https://www.x4b.net/kb/RealIP-Apache
 
+RUN apt-get -y update && apt-get -y install apache2
 # install proxy
 RUN a2enmod \
 proxy \
