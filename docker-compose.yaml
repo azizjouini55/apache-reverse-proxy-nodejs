@@ -21,18 +21,7 @@ services:
     ports:
     - "8080:80"
 
-#  reverse-proxy:
-#    image: httpd:2.4
-#    ports:
-#      - "80:80"
-#    networks:
-#      - back-proxy 
-#    volumes:
-#      - ./httpd.conf:/usr/local/apache2/conf/httpd.conf
-#    command:
-#      - a2enmod proxy 
-#    depends_on:
-#      - nodeapp   
+ 
 
 
 networks:

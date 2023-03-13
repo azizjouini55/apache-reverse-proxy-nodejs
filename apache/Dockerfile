@@ -1,29 +1,16 @@
-FROM debian:buster
-
-USER root
-LABEL dwl.server.proxy="proxy"
-
-# http://stackoverflow.com/questions/7312215/is-there-a-way-to-remove-apaches-reverse-proxy-request-headers?answertab=votes#tab-top
-# https://www.x4b.net/kb/RealIP-Apache
-
-RUN apt-get -y update && apt-get -y install apache2
-# install proxy
-RUN a2enmod \
-proxy \
-proxy_http \
-proxy_ajp \
-deflate \
-proxy_balancer \
-proxy_connect \
-proxy_html \
-xml2enc
+FROM debian:11
 
 
-COPY ./build/dwl/etc/apache2/sites-available/* /dwl/etc/apache2/sites-available/
-RUN cp -rdf /dwl/etc/apache2/sites-available/0000_proxy.rules_0.conf /etc/apache2/sites-available/0000_proxy.rules_0.conf
+RUN apt-get update   && apt-get install -y apache2  libxml2-dev 
 
-RUN service apache2 start
+# Enable required Apache modules
+RUN a2enmod proxy proxy_http proxy_html xml2enc rewrite ssl  
+
+# Copy Apache configuration file to container
+RUN rm etc/apache2/sites-enabled/000-default.conf
+COPY ./httpd.conf /etc/apache2/sites-enabled/httpd.conf
 
 
-RUN chmod +x /dwl/init.sh && chown root:sudo -R /dwl
-USER admin
+
+# Start Apache web server
+CMD ["apache2ctl", "-D", "FOREGROUND"]
