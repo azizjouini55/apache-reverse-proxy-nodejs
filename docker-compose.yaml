@@ -11,6 +11,7 @@ services:
     expose:
       - "3000"
 
+
    
     
 
@@ -21,8 +22,13 @@ services:
     ports:
     - "8080:80"
 
- 
-
+    
+  shibboleth-sp:
+    build: ./shibboleth-sp
+    networks:
+      - back-proxy
+    expose:
+      - "8443"
 
 networks:
   back-proxy:    

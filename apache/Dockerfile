@@ -1,7 +1,7 @@
 FROM debian:11
 
 
-RUN apt-get update   && apt-get install -y apache2  libxml2-dev 
+RUN apt-get update   && apt-get install -y apache2  libxml2-dev libapache2-mod-shib ntp
 
 # Enable required Apache modules
 RUN a2enmod proxy proxy_http proxy_html xml2enc rewrite ssl  
